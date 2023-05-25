@@ -1,0 +1,105 @@
+version: '3.7'
+
+services:
+
+#  keycloak:
+#    image: quay.io/keycloak/keycloak:latest
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - KC_DB=postgres
+#      - KC_DB_URL=jdbc:postgresql://postgres/keycloak
+#      - KC_DB_USERNAME=postgres
+#      - KC_DB_PASSWORD=postgres
+#      - KC_HOSTNAME=localhost
+#      - KEYCLOAK_ADMIN=admin
+#      - KEYCLOAK_ADMIN_PASSWORD=admin
+#      - KEYCLOAK_IMPORT=/tmp/realm-export.json
+#    volumes:
+#      - keycloak-data:/var/lib/keycloak/data
+#      - ./src/main/resources/realm-export.json:/tmp/realm-export.json
+#    depends_on:
+#      - postgres
+#    command:
+#      - start-dev
+#    networks:
+#      - great1
+#
+#  postgres:
+#    image: postgres
+#    volumes:
+#      - goreit-postgres-data:/var/lib/postgresql/data
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=keycloak
+#      - PGDATA=keycloak
+#    networks:
+#      - great1
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - "27017:27017"
+    #    command: mongod mongod --logpath /var/logs
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - great1
+
+#  mongo-express:
+#    image: mongo-express:latest
+#    container_name: mongo-express
+#    restart: always
+#    environment:
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+#      ME_CONFIG_MONGODB_SERVER: mongodb
+#      ME_CONFIG_MONGODB_PORT: "27017"
+#    ports:
+#      - "8081:8081"
+#    networks:
+#      - great
+#    depends_on:
+#      - mongo
+
+#  rabbitmq:
+#    image: rabbitmq:3-management
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '1'
+#          memory: 2000M
+#    environment:
+#      RABBITMQ_USERNAME: admin
+#      RABBITMQ_PASSWORD: admin
+#    volumes:
+#      - rabbitmq-data:/data/mq
+#    networks:
+#      - great1
+
+
+#  kibana:
+#    image: docker.elastic.co/kibana/kibana:8.7.1
+#    environment:
+#      SERVER_NAME: kibana.example.org
+#      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
+
+networks:
+  great1:
+
+volumes:
+  keycloak-data:
+  goreit-postgres-data:
+  rabbitmq-data:
+  mongodb-data:
+  product-ms-data:
+  verification-ms-data:
